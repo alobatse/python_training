@@ -2,9 +2,9 @@
 from model.contact import Contact
 
 
-def test_add_contact(app):
+def test_modify_contact(app):
     app.session.login(username="admin", password="secret")
-    app.contact.create(Contact(firstname = "Andrey", middlename = "Iv", lastname = "Lobanov",
+    app.contact.modify(Contact(firstname = "&Andrey", middlename = "&Iv", lastname = "&Lobanov",
                                                     nickname = "law",
                                                     title = "Lawer",
                                                     company = "Lobanov&brothers",
@@ -24,12 +24,3 @@ def test_add_contact(app):
                                                     notes = "Important client",
                                                     address2 = "Gaza, 20-55"))
     app.session.logout()
-
-
-
-
-
-
-
-
-
