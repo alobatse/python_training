@@ -7,7 +7,7 @@ def test_modify_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname = "User1", middlename = "First", lastname = "Second"))
     old_contacts = app.contact.get_contact_list()
-    contact = (Contact(firstname = "&Andrey", middlename = "&Iv", lastname = "&Lobanov",
+    contact = (Contact(firstname = "changed_Andrey", middlename = "changed_Iv", lastname = "changed_Lobanov",
                                                     nickname = "law",
                                                     title = "Lawer",
                                                     company = "Lobanov&brothers",
@@ -26,7 +26,7 @@ def test_modify_contact(app):
                                                     ayear = "2015",
                                                     notes = "Important client",
                                                     address2 = "Gaza, 20-55"))
-    index = randrange(len(old_contacts))
+    index = (0 if len(old_contacts)==0 else randrange(len(old_contacts)))
     contact.id = old_contacts[index].id
     app.contact.modify_contact_by_index(index, contact)
     app.open_home_page()
