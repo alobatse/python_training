@@ -29,7 +29,7 @@ testdata = [Contact(firstname = "", middlename = "", lastname = "",
                                                     email = random_string("", 6) + '@' + random_string("", 6),
                                                     email2 = random_string("", 6) + '@' + random_string("", 6),
                                                     email3 = random_string("", 6) + '@' + random_string("", 6))
-                                                    for i in range(5)
+                                                    for i in range(2)
                                                     ]
 
 @pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
