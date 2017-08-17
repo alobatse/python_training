@@ -33,7 +33,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        if not (wd.current_url.endswith("/addressbook/")):
+        if not (wd.current_url.endswith("addressbook")):
             wd.get(self.base_url)
 
     def destroy(self):
