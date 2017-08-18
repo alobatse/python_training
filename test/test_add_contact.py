@@ -1,41 +1,13 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
-import pytest
+#import pytest
 import random
 import string
 
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits
-              #+ string.punctuation
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+#@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
 
-def random_str_digit(prefix, maxlen):
-    symbols = string.digits + '+' + '-' + '(' + ')'
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-
-
-testdata = [Contact(firstname = "", middlename = "", lastname = "",
-                                                    address = "",
-                                                    home = "",
-                                                    mobile = "",
-                                                    work = "",
-                                                    fax = "",
-                                                    email = "")] + [Contact(firstname = random_string("f.n. ", 10),
-                                                    lastname = random_string("l.n. ", 10),
-                                                    address = random_string("addr. ", 10),
-                                                    home = random_str_digit("+", 10),
-                                                    mobile = random_str_digit("+", 10),
-                                                    work = random_str_digit("", 10),
-                                                    email = random_string("", 6) + '@' + random_string("", 6),
-                                                    email2 = random_string("", 6) + '@' + random_string("", 6),
-                                                    email3 = random_string("", 6) + '@' + random_string("", 6))
-                                                    for i in range(2)
-                                                    ]
-
-@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
-
-
-def test_add_contact(app, contact):
+def test_add_contact(app, json_contacts):
+    contact = json_contacts
     old_contacts = app.contact.get_contact_list()
     app.contact.create(contact)
     app.open_home_page()
