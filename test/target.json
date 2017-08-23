@@ -1,5 +1,13 @@
 {
+  "web": {
   "baseUrl": "http://law-7/addressbook/",
   "username": "admin",
   "password": "secret"
- }
+  },
+  "db": {
+     "host": "law-7",
+     "name": "addressbook",
+     "user": "root",
+     "password": ""
+  }
+}

@@ -73,6 +73,16 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        #select contact
+        self.select_contact_by_id(id)
+        #submit deletion
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        #confirm deletion
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+
 
     def modify_first_contact(self, new_contact_data):
         self.modify_contact_by_index( 0, new_contact_data)
@@ -85,6 +95,23 @@ class ContactHelper:
         #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         #wd.find_elements_by_xpath("//img[@tittle='Edit']")[index].click()
         row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+        self.fill_contact_form(new_contact_data)
+        # submit modified group
+        wd.find_element_by_name("update").click()
+        self.contact_cache = None
+
+    def modify_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        # select contact
+        #self.select_contact_by_index(index)
+        # modify contact fields
+        #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        #wd.find_elements_by_xpath("//img[@tittle='Edit']")[index].click()
+        #row = wd.find_elements_by_name("entry")[index]
+        checkbox = self.select_contact_by_id(id)
+        row = checkbox.find_element_by_xpath("./../..")
         cell = row.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
         self.fill_contact_form(new_contact_data)
@@ -107,12 +134,20 @@ class ContactHelper:
         self.app.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
-    def select_first_contact(self):
-        select_contact_by_index(0)
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+
+    def select_first_contact(self):
+        self.select_contact_by_index(0)
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        checkbox = wd.find_element_by_css_selector("input[value='%s']" % id)
+        checkbox.click()
+        return checkbox
 
     def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
