@@ -212,4 +212,19 @@ class ContactHelper:
         work = re.search("W: (.*)", text).group(1)
         return Contact(home=home, mobile=mobile, work=work)
 
+    def add_contact_to_group(self, contact, group):
+        wd = self.app.wd
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_name("to_group").find_element_by_css_selector("option[value=\"%s\"]" % group.id).click()
+        wd.find_element_by_name("add").click()
+        wd.find_element_by_partial_link_text("group page").click()
 
+    def delete_contact_from_group(self, contact):
+        wd = self.app.wd
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_partial_link_text("group page").click()
+
+    def select_group(self, group):
+        wd = self.app.wd
+        wd.find_element_by_name("group").find_element_by_css_selector("option[value=\"%s\"]" % group.id).click()
